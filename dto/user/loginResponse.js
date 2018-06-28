@@ -1,4 +1,4 @@
-exports.getLoginResponse = function (result) {
+exports.getLoginResponse = function (result,roleResult) {
     var userDetails = null;
     var responseHeader = new Object();
     if (result != null) {
@@ -9,12 +9,12 @@ exports.getLoginResponse = function (result) {
         userDetails.id = result._id;
         userDetails.firstName = result.userFirstName;
         userDetails.lastName = result.userLastName;
+        userDetails.AssignedRoles = roleResult.assignedRoles;
     } else {
         responseHeader.message = "Login failed! Please try again...";
         responseHeader.code = 5001;
     }
-
-
+    
     var loginResponse = new Object();
     loginResponse.responseHeader = responseHeader;
     loginResponse.userDetails = userDetails;
