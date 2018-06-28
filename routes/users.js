@@ -23,7 +23,7 @@ userRouter.get('/login',function(request, response,next){
    var password = request.query.password;
    database.connect(function(){
     database.signIn(username,password,function signInCallBack(result){
-      console.log(JSON.stringify(result.Roles.roleData));
+      //console.log(JSON.stringify(result.Roles.roleData));
       if(result != null){
        response.status(200);
       }else{
