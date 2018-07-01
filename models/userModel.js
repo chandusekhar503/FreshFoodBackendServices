@@ -9,6 +9,7 @@ var userSchema = new mongoose.Schema({
  userType: {type: String,required:true},
  userRoleId: {type: mongoose.Schema.Types.ObjectId,ref:"Roles"}, 
  createdBy: {type: mongoose.Schema.Types.ObjectId,ref:"Users"},
+ userStatus:{type: String,required:true},
  createdAt: { type: Date, default: Date.now },
  updatedAt: { type: Date, default: Date.now },
 });
