@@ -1,5 +1,6 @@
 var express = require('express');
 var codeMsg = require('../enum/messagecode.js');
+var email = require('../utility/email.js');
 
 exports.getLoginResponse = function (userResult, roleResult) {
     var userDetails = null;
@@ -54,6 +55,7 @@ exports.createUserResponse = function (userResult) {
         userDetails.id = userResult._id;
         userDetails.firstName = userResult.userFirstName;
         userDetails.lastName = userResult.userLastName;
+        email.sendEmailActivationLink(userResult.userEmail,userResult._id);
     } else {
         responseHeader = this.getResponseHeader(codeMsg.CREATE_USER_FAILED);
     }

@@ -6,6 +6,7 @@ var helper = require('../utility/helper.js');
 var email = require('../utility/email.js');
 var userModel = require("../models/userModel.js")
 
+
 /* GET users listing. */
 userRouter.get('/', function (request, response, next) {
   response.send('respond with a resource');
@@ -14,19 +15,11 @@ userRouter.get('/', function (request, response, next) {
 userRouter.post('/create', function (request, response, next) {
   helper.getUserData(request, 'createdby', 'roleId', function (user) {
     user.save().then(item => {
-      
-      var mailOptions = {
-        from: 'mentipoorna@gmail.com',
-        to: 'chandusekhar503@gmail.com',
-        subject: 'Verify your Email',
-        text: 'This is smaple email Activation link!'
-      };
-      email.sendEmailActivationLink(mailOptions);
       var createUserResponse = responseBuilder.createUserResponse(item);
       response.status(200);
       response.send(createUserResponse);
     }).catch(err => {
-      console.log(err);
+      console.log(err)
       var createUserResponse = responseBuilder.createUserResponse(null);
       response.status(500);
       response.send(createUserResponse);
@@ -36,6 +29,34 @@ userRouter.post('/create', function (request, response, next) {
     if (error) return next(error);
     response.json(createdUser);
   });*/
+});
+
+
+/* GET users listing. */
+userRouter.get('/send/email', function (request, response, next) {
+  console.log("Email verification link requested for user: "+request.query.userId);
+  var userId = request.query.userId;
+  userModel.findById(userId,function(error, user){
+    if (error) throw error;
+    console.log(user);
+    email.sendEmailActivationLink(user.userEmail,user._id);  
+    response.status(200);
+    response.send("Verification email sent successfully, please check your email");
+  });
+});
+
+//http://localhost:3000/user/verify/email?id=5b391265c8a7ed21c3847de4
+
+/* GET users listing. */
+userRouter.get('/verify/email', function (request, response, next) {
+  console.log("verifing user with emailId: "+request.query.userId);
+  var userId = request.query.userId;
+  userModel.findByIdAndUpdate(userId,{userStatus:"Active"},function(error, user){
+    if (error) throw error;
+    console.log(user);  
+    response.status(200);
+    response.send("User Activated.");
+  });
 });
 
 userRouter.get('/login', function (request, response, next) {

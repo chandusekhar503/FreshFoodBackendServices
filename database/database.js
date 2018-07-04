@@ -3,8 +3,6 @@ const CircularJSON = require('circular-json');
 var mongoUrl = 'mongodb://localhost';
 var dbName = 'chandu';
 var clientDb;
-var userModel = require('../models/userModel.js');
-var roleModel = require('../models/userModel.js');
 
 exports.connect = function (callback) {
   mongodb.connect(mongoUrl, function (err, database) {
