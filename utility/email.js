@@ -11,6 +11,8 @@ var transporter = nodemailer.createTransport({
 });
 
 exports.sendEmailActivationLink = function (toEmail, userId) {
+  console.log(toEmail);
+  console.log(userId);
   console.log(config.email.id);
   console.log(config.email.password);
   console.log(config.email.link);
