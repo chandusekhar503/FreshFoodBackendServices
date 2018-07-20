@@ -40,8 +40,8 @@ exports.getLoginResponse = function (userResult, roleResult) {
 
 exports.getResponseHeader = function (rootObject) {
     var responseHeader = new Object();
-    responseHeader.message = rootObject.code;
-    responseHeader.code = rootObject.message;
+    responseHeader.message = rootObject.message;
+    responseHeader.code = rootObject.code;
     return responseHeader;
 }
 
@@ -55,7 +55,7 @@ exports.createUserResponse = function (userResult) {
         userDetails.id = userResult._id;
         userDetails.firstName = userResult.userFirstName;
         userDetails.lastName = userResult.userLastName;
-        email.sendEmailActivationLink(userResult.userEmail,userResult._id);
+        email.sendEmailActivationLink(userResult.userEmail, userResult._id);
     } else {
         responseHeader = this.getResponseHeader(codeMsg.CREATE_USER_FAILED);
     }
@@ -64,4 +64,29 @@ exports.createUserResponse = function (userResult) {
     createUserResponse.userDetails = userDetails;
     return createUserResponse;
 };
+
+
+exports.getCategoryResponse = function (categoryListDb) {
+    var categoryResponse = new Object();
+    var responseHeader = null;
+    if (categoryListDb != null && categoryListDb.length > 0) {
+        responseHeader = this.getResponseHeader(codeMsg.GET_CATEGORY_SUCCESS);
+        var categoryList = new Array();
+        for (var i = 0; i < categoryListDb.length; i++) {
+            var categoryDb = categoryListDb[i];
+
+            var category = new Object();
+            category.categoryId = categoryDb._id;
+            category.categoryName = categoryDb.categoryName;
+
+            categoryList.push(category);
+        }
+        categoryResponse.categoryList = categoryList;
+    } else {
+        responseHeader = this.getResponseHeader(codeMsg.GET_CATEGORY_EMPTY);
+    }
+    categoryResponse.responseHeader = responseHeader;
+    return categoryResponse;
+};
+
 

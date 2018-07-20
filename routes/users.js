@@ -86,6 +86,9 @@ userRouter.get('/verify/email', function (request, response, next) {
   });
 });
 
+/**
+ * sigin user
+ */
 userRouter.get('/login', function (request, response, next) {
   var username = request.query.username;
   var password = request.query.password;

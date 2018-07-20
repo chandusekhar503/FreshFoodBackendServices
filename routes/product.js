@@ -9,4 +9,11 @@ productRouter.post('/create',function(request,respone,next){
     });
 });
 
+
+
+
+
+
+
+
 module.exports = productRouter;
