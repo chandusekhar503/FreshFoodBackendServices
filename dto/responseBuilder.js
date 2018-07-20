@@ -65,7 +65,6 @@ exports.createUserResponse = function (userResult) {
     return createUserResponse;
 };
 
-
 exports.getCategoryResponse = function (categoryListDb) {
     var categoryResponse = new Object();
     var responseHeader = null;
@@ -74,11 +73,9 @@ exports.getCategoryResponse = function (categoryListDb) {
         var categoryList = new Array();
         for (var i = 0; i < categoryListDb.length; i++) {
             var categoryDb = categoryListDb[i];
-
             var category = new Object();
             category.categoryId = categoryDb._id;
             category.categoryName = categoryDb.categoryName;
-
             categoryList.push(category);
         }
         categoryResponse.categoryList = categoryList;
@@ -89,4 +86,42 @@ exports.getCategoryResponse = function (categoryListDb) {
     return categoryResponse;
 };
 
+exports.getProductResponse = function (productListDb) {
+    var productResponse = new Object();
+    var responseHeader = null;
+    if (productListDb != null && productListDb.length > 0) {
+        responseHeader = this.getResponseHeader(codeMsg.GET_PRODUCT_SUCCESS);
+        var productList = new Array();
+        for (var i = 0; i < productListDb.length; i++) {
+            var productDb = productListDb[i];
+            var product = new Object();
+            product.productId = productDb._id;
+            product.productName = productDb.productName;
+            product.productQuantity = productDb.productQuantity;
+            product.productPrice = productDb.productPrice;
+            productList.push(product);
+        }
+        productResponse.productList = productList;
+    } else {
+        responseHeader = this.getResponseHeader(codeMsg.PRODUCT_EMPTY);
+    }
+    productResponse.responseHeader = responseHeader;
+    return productResponse;
+};
 
+exports.createProductResponse = function (product, codeMsg) {
+    var productDetails = null;
+    var responseHeader = null;
+    if (product != null) {
+        productDetails = new Object();
+        responseHeader = this.getResponseHeader(codeMsg);
+        productDetails.productId = product._id;
+        productDetails.productName = product.productName;
+    } else {
+        responseHeader = this.getResponseHeader(codeMsg);
+    }
+    var createProductResponse = new Object();
+    createProductResponse.responseHeader = responseHeader;
+    if (productDetails != null) createProductResponse.productDetails = productDetails;
+    return createProductResponse;
+};
