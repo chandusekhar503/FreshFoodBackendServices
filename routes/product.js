@@ -4,22 +4,15 @@ var productModel = require('../models/productModel.js');
 var helper = require('../utility/helper.js');
 var responseBuilder = require('../dto/responseBuilder');
 var codeMsg = require('../enum/messagecode.js');
-
-/*
-productRouter.post('/create', function (request, respone, next) {
-    productModel.create(request.body, function (error, createdProduct) {
-        if (error) return next(error);
-        respone.json(createdProduct);
-    });
-});
-*/
+var mongoose = require('mongoose');
 
 /**
  * Creating a product and emailing to registered email.
  */
 productRouter.post('/create', function (request, response, next) {
-    var query = { $and: [{ productMerchantId: { $regex: request.body.productMerchantId, $options: 'i' } }, { productName: { $regex: request.body.productName, $options: 'i' } }] }
+    var query = {$and:[{createdBy:mongoose.Types.ObjectId(request.body.createdBy)},{ productName:request.body.productName}]};
     productModel.findOne(query, function (error, productDb) {
+        console.log(productDb);
         if (productDb == null) {
             helper.getProductData(request, function (product) {
                 product.save().then(item => {
@@ -42,7 +35,7 @@ productRouter.post('/create', function (request, response, next) {
     });
 });
 
-productRouter.post('/update', function (request, response, next) {
+productRouter.put('/update', function (request, response, next) {
     var productId = request.body.productId;
     productModel.findById({ "_id": productId }, function (error, productDb) {
         console.log(productDb);
@@ -88,10 +81,33 @@ productRouter.get('/', function (request, response, next) {
         productModel.find(function (error, categoryList) {
             if (error) next(error);
             var res = responseBuilder.getProductResponse(categoryList);
-            response.status(200)
+            response.status(200);
             response.send(res);
         });
     }
+});
+
+productRouter.delete('/remove',function(request,response,next){
+   var query = {$and:[{createdBy:mongoose.Types.ObjectId(request.query.userId)},{ _id:mongoose.Types.ObjectId(request.query.productId)}]};
+    productModel.findOne(query,function(error,product){
+        if(error){
+            console.log(error);
+            next(error);
+        }
+        var res = null;
+        if(product != null){
+            product.remove();
+            response.status(200);
+            res = responseBuilder.createProductResponse(product, codeMsg.DELETE_PRODUCT_SUCCESS);
+            response.send(res);
+        }else{
+            console.log('Product does not exists');
+             response.status(500)
+             res = responseBuilder.createProductResponse(product, codeMsg.DELETE_PRODUCT_FAILED);
+             response.send(res);
+        }
+        
+    });
 });
 
 module.exports = productRouter;

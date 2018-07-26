@@ -48,7 +48,7 @@ exports.createUpdatedProduct = function (request, oldProduct) {
         oldProduct.productName = request.body.productName,
         oldProduct.productQuantity = request.body.productQuantity,
         oldProduct.productPrice = request.body.productPrice,
-        oldProduct.productMerchantId = request.body.productMerchantId,
+        oldProduct.createdBy = request.body.createdBy
         oldProduct.updateAt = Date.now()
     return oldProduct;
 };
@@ -59,7 +59,7 @@ exports.createProduct = function (request) {
         productName: request.body.productName,
         productQuantity: request.body.productQuantity,
         productPrice: request.body.productPrice,
-        productMerchantId: request.body.productMerchantId
+        createdBy: request.body.createdBy
     });
     return product;
 };

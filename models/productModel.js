@@ -5,11 +5,11 @@ var productSchema = new mongoose.Schema({
     productPrice: Number,
     productImage:String,
     productQuantity:String,
-    productMerchantId: String,
     productCategory: { type: mongoose.Schema.Types.ObjectId, ref: "Category" },
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "Users" },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
 });
 
+mongoose.set('debug', true);
 module.exports = mongoose.model('Products', productSchema);

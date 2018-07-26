@@ -19,4 +19,8 @@ this.LOGIN_SUCCESS = { message: "Login success", code: 8000 },
 
   this.UPDATE_PRODUCT_SUCCESS = { message: "Product updation success", code: 8013 },
   this.UPDATE_PRODUCT_FAILED = { message: "Product updation failed", code: 8014 },
-  this.PRODUCT_DOES_NOT_EXISTS = { message: "Product does not exists", code: 8015 }
+  this.PRODUCT_DOES_NOT_EXISTS = { message: "Product does not exists", code: 8015 },
+  this.DELETE_PRODUCT_SUCCESS = { message: "Product deleted", code: 8016 },
+  this.DELETE_PRODUCT_FAILED = { message: "Product already deleted or not exists.", code: 8017 }
+
+  
