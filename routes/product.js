@@ -70,17 +70,17 @@ productRouter.put('/update', function (request, response, next) {
  */
 productRouter.get('/', function (request, response, next) {
     var categoryType = request.query.categoryType;
-    if (categoryType != null && categoryType != "") {
-        productModel.find({ "productCategory": categoryType }, function (error, categoryList) {
+    if (categoryType != null && categoryType != " ") {
+        productModel.find({ "productCategory": categoryType }, function (error, productList) {
             if (error) next(error);
-            var res = responseBuilder.getProductResponse(categoryList);
+            var res = responseBuilder.getProductResponse(productList);
             response.status(200)
             response.send(res);
         });
     } else {
-        productModel.find(function (error, categoryList) {
+        productModel.find(function (error, productList) {
             if (error) next(error);
-            var res = responseBuilder.getProductResponse(categoryList);
+            var res = responseBuilder.getProductResponse(productList);
             response.status(200);
             response.send(res);
         });
