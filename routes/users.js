@@ -5,7 +5,8 @@ var responseBuilder = require('../dto/responseBuilder');
 var helper = require('../utility/helper.js');
 var validationhelper = require('../utility/validationhelper.js');
 var email = require('../utility/email.js');
-var userModel = require("../models/userModel.js")
+var userModel = require("../models/userModel.js");
+var roleModel = require("../models/roleModel.js")
 
 
 /* GET users listing. */
@@ -92,10 +93,10 @@ userRouter.get('/verify/email', function (request, response, next) {
 userRouter.get('/login', function (request, response, next) {
   var username = request.query.username;
   var password = request.query.password;
-  database.connect(function () {
-    database.signIn(username, password, function signInCallBack(userResult) {
+  var query = {$and:[{ "userMobileNumber":username},{'userPassword':password}]};
+  userModel.findOne(query, function (error, userResult) {
       if (userResult != null) {
-        database.getRoleData(userResult.userRoleId, function getRoleByIdCallback(roleResult) {
+        roleModel.findById({ "_id":userResult.userRoleId}, function (error,roleResult) {
           var loginResponse = responseBuilder.getLoginResponse(userResult, roleResult);
           response.status(200);
           response.send(loginResponse);
@@ -106,7 +107,6 @@ userRouter.get('/login', function (request, response, next) {
         response.send(loginResponse);
       }
     });
-  });
 });
 
 module.exports = userRouter;
