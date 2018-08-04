@@ -1,7 +1,7 @@
 var mongodb = require('mongodb').MongoClient;
 const CircularJSON = require('circular-json');
-var mongoUrl = 'mongodb://localhost';
-var dbName = 'chandu';
+var mongoUrl = 'mongodb://chandu:qwerty12@ds113122.mlab.com:13122';
+var dbName = 'freshfood';
 var clientDb;
 
 exports.connect = function (callback) {

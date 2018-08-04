@@ -2,8 +2,8 @@ this.application = {
     port : 9000
 }
 this.database = {
-    url: "mongodb://localhost",
-    dbname: "chandu" // database name
+    url: "mongodb://chandu:qwerty12@ds113122.mlab.com:13122",
+    dbname: "freshfood" // database name
 
 }
 this.email={

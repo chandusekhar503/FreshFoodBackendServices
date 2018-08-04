@@ -9,7 +9,7 @@ var bodyParser = require('body-parser');
 //MONGO Database connection
 var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/chandu')
+mongoose.connect('mongodb://chandu:qwerty12@ds113122.mlab.com:13122/freshfood')
   .then(() => console.log('mongo database connection succesful'))
   .catch((err) => console.error(err));
 
