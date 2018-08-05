@@ -70,7 +70,7 @@ productRouter.put('/update', function (request, response, next) {
  */
 productRouter.get('/', function (request, response, next) {
     var categoryType = request.query.categoryType;
-    if (categoryType != null && categoryType != " ") {
+    if (categoryType != null && categoryType != "ALL") {
         productModel.find({ "productCategory": categoryType }, function (error, productList) {
             if (error) next(error);
             var res = responseBuilder.getProductResponse(productList);
