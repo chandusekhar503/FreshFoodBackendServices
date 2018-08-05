@@ -10,7 +10,7 @@ this.email={
     type : 'gmail',
     id : 'freshfoodemail@gmail.com',
     password : 'Qwerty@12',
-    link:'http://localhost:3000/users/verify/email?userId=',
+    link:'https://aqueous-everglades-29525.herokuapp.com/users/verify/email?userId=',
     subject:'Please verify your emailId'
 }
 
