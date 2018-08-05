@@ -8,8 +8,8 @@ this.database = {
 }
 this.email={
     type : 'gmail',
-    id : 'mentipoorna@gmail.com',
-    password : 'Poorna@4321',
+    id : 'freshfoodemail@gmail.com',
+    password : 'Qwerty@12',
     link:'http://localhost:3000/users/verify/email?userId=',
     subject:'Please verify your emailId'
 }
